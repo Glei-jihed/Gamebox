@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "616332670994",
+    "project_id": "game-box-2fa27",
+    "storage_bucket": "game-box-2fa27.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:616332670994:android:4464f206f2b095b08300cb",
+        "android_client_info": {
+          "package_name": "com.example.game_box"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1eem9qtBgsvbWBxKmCNBtrImMKJoAXyE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
