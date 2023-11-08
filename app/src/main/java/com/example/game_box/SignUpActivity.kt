@@ -1,5 +1,6 @@
 package com.example.game_box
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -23,6 +24,11 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
         mBinding.emailEt.onFocusChangeListener = this
         mBinding.passET.onFocusChangeListener = this
         mBinding.confirmPassEt.onFocusChangeListener = this
+
+        mBinding.textView.setOnClickListener {
+            val intent = Intent(this,SignInActivity::class.java)
+            startActivity(intent)
+        }
 
 
     }
@@ -126,7 +132,8 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
                 val firebaseAuth = FirebaseAuth.getInstance() // Initialisation de firebaseAuth
                 firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                     if(it.isSuccessful){
-
+                            val intent = Intent(this,SignInActivity::class.java)
+                            startActivity(intent)
                     } else {
                         Toast.makeText(this,it.exception.toString(),Toast.LENGTH_SHORT).show()
                     }
