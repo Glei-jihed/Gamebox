@@ -7,9 +7,10 @@ import android.util.Patterns
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.game_box.databinding.ActivitySignUpBinding
-import com.example.game_box.R
+import com.google.firebase.auth.FirebaseAuth
 
 
 class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusChangeListener, View.OnKeyListener {
@@ -22,7 +23,8 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
         mBinding.emailEt.onFocusChangeListener = this
         mBinding.passET.onFocusChangeListener = this
         mBinding.confirmPassEt.onFocusChangeListener = this
-        setContentView(R.layout.activity_sign_up)
+
+
     }
     private fun validateEmail():Boolean{
         var errorMessage:String? = null
@@ -113,7 +115,27 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
     }
 
     override fun onClick(v: View?) {
-        TODO("Not yet implemented")
+
+        mBinding.button.setOnClickListener {
+
+            val email = mBinding.emailEt.text.toString()
+            val password = mBinding.passET.text.toString()
+            val confirmPass = mBinding.confirmPassEt.text.toString()
+
+            if (validateEmail() && validatePassword() && validatePasswordAndConfirmPassword()) {
+                val firebaseAuth = FirebaseAuth.getInstance() // Initialisation de firebaseAuth
+                firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+                    if(it.isSuccessful){
+
+                    } else {
+                        Toast.makeText(this,it.exception.toString(),Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } else {
+                Toast.makeText(this, "Verify your data please !", Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 
     override fun onFocusChange(view: View?, hasFocus: Boolean) {
