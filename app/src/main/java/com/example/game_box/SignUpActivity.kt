@@ -1,13 +1,15 @@
 package com.example.game_box
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Patterns
-
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.game_box.databinding.ActivitySignUpBinding
+import com.example.game_box.R
 
 
 class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusChangeListener, View.OnKeyListener {
@@ -114,11 +116,61 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
         TODO("Not yet implemented")
     }
 
-    override fun onFocusChange(v: View?, hasFocus: Boolean) {
-        TODO("Not yet implemented")
+    override fun onFocusChange(view: View?, hasFocus: Boolean) {
+        if(view!=null){
+            when(view.id){
+
+                R.id.emailEt ->{
+                    if(hasFocus){
+                        if(mBinding.emailLayout.isErrorEnabled){
+                            mBinding.emailLayout.isErrorEnabled = false
+                        }
+                    }else{
+                        if(validateEmail()){
+                            //do validation for this uniqueness
+                        }
+                    }
+                }
+                R.id.passET ->{
+                    if(hasFocus){
+                        if(mBinding.passwordLayout.isErrorEnabled){
+                            mBinding.passwordLayout.isErrorEnabled = false
+                        }
+                    }else{
+                        if(validatePassword() && mBinding.confirmPassEt.text!!.isEmpty() && validateConfirmpassword() && validatePasswordAndConfirmPassword() ) {
+                            if (mBinding.confirmPasswordLayout.isErrorEnabled){
+                                mBinding.confirmPasswordLayout.isErrorEnabled = false
+                            }
+                            mBinding.confirmPasswordLayout.apply {
+                                setStartIconDrawable(R.drawable.check_circle_24)
+                                setStartIconTintList(ColorStateList.valueOf(Color.GREEN))
+                            }
+                        }
+
+                    }
+                }
+                R.id.confirmPassEt ->{
+                    if(hasFocus){
+                        if(mBinding.confirmPasswordLayout.isErrorEnabled){
+                            mBinding.confirmPasswordLayout.isErrorEnabled = false
+                        }
+                    }else{
+                        if(validateConfirmpassword() && validatePasswordAndConfirmPassword() && validatePassword()){
+                            if (mBinding.passwordLayout.isErrorEnabled){
+                                mBinding.passwordLayout.isErrorEnabled = false
+                            }
+                            mBinding.confirmPasswordLayout.apply {
+                                setStartIconDrawable(R.drawable.check_circle_24)
+                                setStartIconTintList(ColorStateList.valueOf(Color.GREEN))
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
+    override fun onKey(view: View?, event: Int, keyevent: KeyEvent?): Boolean {
         return false
     }
 
