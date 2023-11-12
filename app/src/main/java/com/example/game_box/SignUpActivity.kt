@@ -17,10 +17,13 @@ import com.google.firebase.auth.FirebaseAuth
 class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusChangeListener, View.OnKeyListener {
 
     private lateinit var mBinding: ActivitySignUpBinding
+
+    private lateinit var firebaseAuth:  FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivitySignUpBinding.inflate(LayoutInflater.from(this))
         setContentView(mBinding.root)
+        firebaseAuth = FirebaseAuth.getInstance() // Initialisation de firebaseAuth
         mBinding.emailEt.onFocusChangeListener = this
         mBinding.passET.onFocusChangeListener = this
         mBinding.confirmPassEt.onFocusChangeListener = this
@@ -28,6 +31,32 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
         mBinding.textView.setOnClickListener {
             val intent = Intent(this,SignInActivity::class.java)
             startActivity(intent)
+        }
+
+        mBinding.button.setOnClickListener {
+
+            val email = mBinding.emailEt.text.toString()
+            val password = mBinding.passET.text.toString()
+            val confirmPass = mBinding.confirmPassEt.text.toString()
+
+            if (email.isNotEmpty() && password.isNotEmpty() && confirmPass.isNotEmpty()) {
+                if(password == confirmPass){
+                    firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+                        if(it.isSuccessful){
+                            val intent = Intent(this,SignInActivity::class.java)
+                            startActivity(intent)
+                        } else {
+                            Toast.makeText(this,it.exception.toString(),Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    Toast.makeText(this,"Password is not matching",Toast.LENGTH_SHORT).show()
+                }
+
+
+            } else {
+                Toast.makeText(this, "Enter your data please !", Toast.LENGTH_SHORT).show()
+            }
         }
 
 
@@ -117,31 +146,12 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
             }
 
         }
-        return errorMessage ==null
+        return errorMessage == null
     }
 
-    override fun onClick(v: View?) {
+    override fun onClick(view: View?) {
 
-        mBinding.button.setOnClickListener {
 
-            val email = mBinding.emailEt.text.toString()
-            val password = mBinding.passET.text.toString()
-            val confirmPass = mBinding.confirmPassEt.text.toString()
-
-            if (validateEmail() && validatePassword() && validatePasswordAndConfirmPassword()) {
-                val firebaseAuth = FirebaseAuth.getInstance() // Initialisation de firebaseAuth
-                firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-                    if(it.isSuccessful){
-                            val intent = Intent(this,SignInActivity::class.java)
-                            startActivity(intent)
-                    } else {
-                        Toast.makeText(this,it.exception.toString(),Toast.LENGTH_SHORT).show()
-                    }
-                }
-            } else {
-                Toast.makeText(this, "Verify your data please !", Toast.LENGTH_SHORT).show()
-            }
-        }
 
     }
 
@@ -189,8 +199,10 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
                                 mBinding.passwordLayout.isErrorEnabled = false
                             }
                             mBinding.confirmPasswordLayout.apply {
+
                                 setStartIconDrawable(R.drawable.check_circle_24)
                                 setStartIconTintList(ColorStateList.valueOf(Color.GREEN))
+
                             }
                         }
                     }
