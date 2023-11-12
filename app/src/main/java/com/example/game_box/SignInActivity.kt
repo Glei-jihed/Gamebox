@@ -54,53 +54,67 @@ class SignInActivity : AppCompatActivity(), View.OnFocusChangeListener, View.OnK
 
 
     }
+    fun validateEmail():Boolean{
+        var errorMessage:String? = null
+        val value: String = mBinding.emailEt.text.toString()
+        if(value.isEmpty()){
 
-    override fun onFocusChange(v: View?, hasFocus: Boolean) {
-         fun validateEmail():Boolean{
-            var errorMessage:String? = null
-            val value: String = mBinding.emailEt.text.toString()
-            if(value.isEmpty()){
+            errorMessage = "Email is required"
 
-                errorMessage = "Email is required"
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(value).matches()){
 
-            } else if (!Patterns.EMAIL_ADDRESS.matcher(value).matches()){
+            errorMessage = "Email adress is invalid !"
+        }
+        if(errorMessage != null){
 
-                errorMessage = "Email adress is invalid !"
+            mBinding.emailLayout.apply {
+                isErrorEnabled = true
+                error = errorMessage
             }
-            if(errorMessage != null){
-
-                mBinding.emailLayout.apply {
-                    isErrorEnabled = true
-                    error = errorMessage
-                }
-
-            }
-            return errorMessage == null
 
         }
-        fun validatePassword():Boolean{
-            var errorMessage:String? = null
-            val value: String = mBinding.passET.text.toString()
-            if(value.isEmpty()){
+        return errorMessage == null
 
-                errorMessage = "Password is required"
+    }
+    fun validatePassword():Boolean{
+        var errorMessage:String? = null
+        val value: String = mBinding.passET.text.toString()
+        if(value.isEmpty()){
 
-            } else if (value.length < 6){
+            errorMessage = "Password is required"
 
-                errorMessage = "Password must be 6 characters Long !"
-            }
+        } else if (value.length < 6){
 
-            if(errorMessage != null){
-
-                mBinding.passwordLayout.apply {
-                    isErrorEnabled = true
-                    error = errorMessage
-                }
-
-            }
-
-            return errorMessage == null
+            errorMessage = "Password must be 6 characters Long !"
         }
+
+        if(errorMessage != null){
+
+            mBinding.passwordLayout.apply {
+                isErrorEnabled = true
+                error = errorMessage
+            }
+
+        }
+
+        return errorMessage == null
+    }
+
+    override fun onFocusChange(view: View, hasFocus: Boolean) {
+        if(view!=null){
+            when(view.id){
+
+                R.id.emailEt ->{
+                    if(hasFocus){
+                        if(mBinding.emailLayout.isErrorEnabled){
+                            mBinding.emailLayout.isErrorEnabled = false
+                        }
+                    }else{
+                        if(validateEmail()){
+                            //do validation for this uniqueness
+                        }
+                    }
+                }
     }
 
     override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
