@@ -1,5 +1,6 @@
 package com.example.game_box
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.game_box.databinding.ActivityMainBinding
@@ -13,5 +14,11 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         firebaseAuth = FirebaseAuth.getInstance()
+
+        mBinding.SObutton.setOnClickListener {
+            firebaseAuth.signOut()
+            startActivity(Intent(this, SignInActivity::class.java))
+        }
+
     }
 }
