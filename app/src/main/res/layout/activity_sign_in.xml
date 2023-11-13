@@ -57,6 +57,19 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/gSignInButton"
+        android:layout_width="380dp"
+        android:layout_height="50dp"
+        android:text="@string/sign_in_with_google_account"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/purple_200"
+        app:icon="@drawable/googleg_standard_color_18"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="537dp"
+        tools:ignore="MissingConstraints"/>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"
         android:layout_width="0dp"

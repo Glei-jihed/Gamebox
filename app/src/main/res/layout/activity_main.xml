@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/gSignInButton"
+        android:layout_width="105dp"
+        android:layout_height="53dp"
+        android:text="@string/sign_out"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/purple_200"
+
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="290dp"
+        tools:layout_editor_absoluteY="16dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
