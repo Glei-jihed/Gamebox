@@ -10,6 +10,6 @@
     <string name="sign_up_with_google_account">Sign up with google account</string>
     <string name="sign_in_with_google_account">Sign in with google account</string>
     <string name="sign_out">Sign out</string>
-    <string name="defaul_web_client_id" />
-    <string name="default_web_client_id">default_web_client_id</string>
+    <string name="default_web_client_id" />
+
 </resources>
