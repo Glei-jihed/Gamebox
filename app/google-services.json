@@ -12,7 +12,20 @@
           "package_name": "com.example.game_box"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "616332670994-f7a9bj17lhrbcmgb9209pq3lmgrj0jpc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.game_box",
+            "certificate_hash": "057b79489f3df5ed4483f7dd6857216f4b9c0218"
+          }
+        },
+        {
+          "client_id": "616332670994-4v6a86beso6bt9icom1qa1pb4tsjh7ua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB1eem9qtBgsvbWBxKmCNBtrImMKJoAXyE"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "616332670994-4v6a86beso6bt9icom1qa1pb4tsjh7ua.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

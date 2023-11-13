@@ -1,6 +1,8 @@
 package com.example.game_box
 
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
@@ -86,7 +88,12 @@ class SignInActivity : AppCompatActivity(), View.OnFocusChangeListener {
                         }
                     } else {
                         if (validateEmail()) {
-                            //do validation for this uniqueness
+                            mBinding.emailLayout.apply {
+
+                                setStartIconDrawable(R.drawable.check_circle_24)
+                                setStartIconTintList(ColorStateList.valueOf(Color.GREEN))
+
+                            }
                         }
                     }
                 }

@@ -166,7 +166,12 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
                         }
                     }else{
                         if(validateEmail()){
-                            //do validation for this uniqueness
+                            mBinding.emailLayout.apply {
+
+                                setStartIconDrawable(R.drawable.check_circle_24)
+                                setStartIconTintList(ColorStateList.valueOf(Color.GREEN))
+
+                            }
                         }
                     }
                 }
