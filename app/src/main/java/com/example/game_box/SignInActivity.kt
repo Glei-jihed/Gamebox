@@ -9,21 +9,32 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.game_box.databinding.ActivitySignInBinding
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 
 class SignInActivity : AppCompatActivity(), View.OnFocusChangeListener {
     private lateinit var mBinding: ActivitySignInBinding
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInOptions
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         firebaseAuth = FirebaseAuth.getInstance()
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.defaul_web_client_id))
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(this , gso)
 
         mBinding.textView.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
+
+
 
 
         mBinding.button.setOnClickListener {
@@ -48,6 +59,7 @@ class SignInActivity : AppCompatActivity(), View.OnFocusChangeListener {
                 Toast.makeText(this, "Enter your data please !", Toast.LENGTH_SHORT).show()
             }
         }
+
 
 
     }
