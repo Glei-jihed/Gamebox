@@ -10,13 +10,21 @@
 
     <Button
         android:id="@+id/SObutton"
-        android:layout_width="103dp"
-        android:layout_height="49dp"
-        android:text="@string/sign_out"
+        android:layout_width="46dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="293dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="666dp"
         app:backgroundTint="@color/purple_200"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="292dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:icon="@drawable/baseline_logout_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
