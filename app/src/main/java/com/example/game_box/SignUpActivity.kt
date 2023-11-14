@@ -47,6 +47,7 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
                             startActivity(intent)
                         } else {
                             Toast.makeText(this,it.exception.toString(),Toast.LENGTH_SHORT).show()
+
                         }
                     }
                 } else {
@@ -56,12 +57,13 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
 
             } else {
                 Toast.makeText(this, "Enter your data please !", Toast.LENGTH_SHORT).show()
+
             }
         }
 
 
     }
-    private fun validateEmail():Boolean{
+    private fun validateEmail(shouldVibrateView: Boolean= true):Boolean{
         var errorMessage:String? = null
         val value: String = mBinding.emailEt.text.toString()
         if(value.isEmpty()){
@@ -77,13 +79,15 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
             mBinding.emailLayout.apply {
                 isErrorEnabled = true
                 error = errorMessage
+                if(shouldVibrateView){ VibrateView.vibrate(this@SignUpActivity, this)}
+
             }
 
         }
         return errorMessage == null
 
     }
-    private fun validatePassword():Boolean{
+    private fun validatePassword(shouldVibrateView: Boolean= true):Boolean{
         var errorMessage:String? = null
         val value: String = mBinding.passET.text.toString()
         if(value.isEmpty()){
@@ -100,6 +104,8 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
             mBinding.passwordLayout.apply {
                 isErrorEnabled = true
                 error = errorMessage
+                if(shouldVibrateView){ VibrateView.vibrate(this@SignUpActivity, this)}
+
             }
 
         }
@@ -107,7 +113,7 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
         return errorMessage == null
     }
 
-    private fun validateConfirmpassword():Boolean {
+    private fun validateConfirmpassword(shouldVibrateView: Boolean= true):Boolean {
         var errorMessage:String? = null
         val value: String = mBinding.confirmPassEt.text.toString()
         if(value.isEmpty()){
@@ -123,6 +129,8 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
             mBinding.confirmPasswordLayout.apply {
                 isErrorEnabled = true
                 error = errorMessage
+                if(shouldVibrateView){ VibrateView.vibrate(this@SignUpActivity, this)}
+
             }
 
         }
@@ -130,7 +138,7 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
         return errorMessage == null
     }
 
-    private fun validatePasswordAndConfirmPassword():Boolean{
+    private fun validatePasswordAndConfirmPassword(shouldVibrateView: Boolean= true):Boolean{
         var errorMessage: String? = null
         val password: String? = mBinding.passET.text.toString()
         val confirmPassword: String? = mBinding.confirmPassEt.text.toString()
@@ -143,6 +151,7 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
             mBinding.confirmPasswordLayout.apply {
                 isErrorEnabled = true
                 error = errorMessage
+               if(shouldVibrateView){ VibrateView.vibrate(this@SignUpActivity, this)}
             }
 
         }

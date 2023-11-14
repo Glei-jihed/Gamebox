@@ -136,6 +136,7 @@ class SignInActivity : AppCompatActivity(), View.OnFocusChangeListener {
             mBinding.emailLayout.apply {
                 isErrorEnabled = true
                 error = errorMessage
+                VibrateView.vibrate(this@SignInActivity, this)
             }
 
         }
