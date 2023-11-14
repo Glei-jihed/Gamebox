@@ -18,7 +18,6 @@ class VibrateView {
                     )
                 )
             }
-
             val anmation = AnimationUtils.loadAnimation(context, R.anim.vibrate)
             view.startAnimation(anmation)
 
