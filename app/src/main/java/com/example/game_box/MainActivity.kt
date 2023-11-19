@@ -19,6 +19,10 @@ class MainActivity : AppCompatActivity() {
             firebaseAuth.signOut()
             startActivity(Intent(this, SignInActivity::class.java))
         }
+        mBinding.ticButton.setOnClickListener {
+
+            startActivity(Intent(this, StartTicActivity::class.java))
+        }
 
     }
 }
