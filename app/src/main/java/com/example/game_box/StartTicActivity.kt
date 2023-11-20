@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.game_box.databinding.ActivityStartTicBinding
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 class StartTicActivity : AppCompatActivity() {
 
@@ -19,10 +21,21 @@ class StartTicActivity : AppCompatActivity() {
             createOfflineGame()
         }
 
+        mBinding.playOn.setOnClickListener {
+            createOnlineGame()
+        }
 
 
-
-
+    }
+    fun createOnlineGame(){
+        GameData.myID = "X"
+        GameData.saveGameModel(
+            GameModel(
+                gameStatus = GameStatus.CREATED,
+                gameId = Random.nextInt(1000..9999).toString()
+            )
+        )
+        startGame()
     }
 
     fun createOfflineGame(){
