@@ -1,4 +1,4 @@
-package com.example.game_box
+package com.example.game_box.utils
 
 import android.content.Context
 import android.os.Build
@@ -6,6 +6,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.View
 import android.view.animation.AnimationUtils
+import com.example.game_box.R
 
 class VibrateView {
     companion object{

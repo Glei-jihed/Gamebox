@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "616332670994",
+    "project_id": "game-box-2fa27",
+    "storage_bucket": "game-box-2fa27.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:616332670994:android:4464f206f2b095b08300cb",
+        "android_client_info": {
+          "package_name": "com.example.game_box"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "616332670994-f7a9bj17lhrbcmgb9209pq3lmgrj0jpc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.game_box",
+            "certificate_hash": "057b79489f3df5ed4483f7dd6857216f4b9c0218"
+          }
+        },
+        {
+          "client_id": "616332670994-4v6a86beso6bt9icom1qa1pb4tsjh7ua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1eem9qtBgsvbWBxKmCNBtrImMKJoAXyE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "616332670994-4v6a86beso6bt9icom1qa1pb4tsjh7ua.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
