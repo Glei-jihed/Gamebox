@@ -13,21 +13,29 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Inflater le layout + binding
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
         // Observer l'état d'authentification
         authViewModel.isAuthenticated.observe(this) { isAuthenticated ->
-            // Si on n’est plus authentifié, retour à SignIn
             if (!isAuthenticated) {
                 startActivity(Intent(this, SignInActivity::class.java))
                 finish()
             }
         }
 
+        // Redirection vers Dev Notes
+        mBinding.cardDevNotes.setOnClickListener {
+            startActivity(Intent(this, DevNotesActivity::class.java))
+        }
+
+        // Redirection vers Open API Doc
+        mBinding.cardOpenApi.setOnClickListener {
+            startActivity(Intent(this, OpenApiDocActivity::class.java))
+        }
+
         // Déconnexion
-        mBinding.SObutton.setOnClickListener {
+        mBinding.btnLogout.setOnClickListener {
             authViewModel.signOut()
         }
     }

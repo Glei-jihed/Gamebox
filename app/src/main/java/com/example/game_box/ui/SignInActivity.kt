@@ -1,112 +1,114 @@
 package com.example.game_box.ui
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Patterns
-import android.view.View
-import androidx.activity.viewModels
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.game_box.R
 import com.example.game_box.databinding.ActivitySignInBinding
-import com.example.game_box.utils.VibrateView
-import com.example.game_box.viewmodel.AuthViewModel
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 
-class SignInActivity : AppCompatActivity(), View.OnFocusChangeListener {
+class SignInActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivitySignInBinding
-    private val authViewModel: AuthViewModel by viewModels()
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-        // Gestion du focus pour validation en direct
-        mBinding.emailEt.onFocusChangeListener = this
-        mBinding.passET.onFocusChangeListener = this
+        firebaseAuth = FirebaseAuth.getInstance()
 
-        // Bouton "Sign In"
-        mBinding.button.setOnClickListener {
-            val email = mBinding.emailEt.text.toString().trim()
-            val password = mBinding.passET.text.toString().trim()
-
-            val isEmailValid = validateEmail()
-            val isPasswordValid = validatePassword()
-
-            if (isEmailValid && isPasswordValid) {
-                authViewModel.signIn(email, password)
-            }
-        }
-
-        // Observer l'état d'authentification
-        authViewModel.isAuthenticated.observe(this) { isAuthenticated ->
-            if (isAuthenticated) {
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
-            }
-        }
-
-        // Redirection vers SignUpActivity
+        // ✔ Redirection vers SignUpActivity quand on clique sur "Pas encore inscrit ?"
         mBinding.textView.setOnClickListener {
-            startActivity(Intent(this, SignUpActivity::class.java))
+            val intent = Intent(this, SignUpActivity::class.java)
+            startActivity(intent)
+        }
+
+        // ✔ Connexion avec email et password
+        mBinding.button.setOnClickListener {
+            val email = mBinding.emailEt.text.toString()
+            val password = mBinding.passET.text.toString()
+
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                firebaseAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(this, "Connexion réussie", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this, MainActivity::class.java))
+                            finish()
+                        } else {
+                            Toast.makeText(this, "Échec : ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+            } else {
+                Toast.makeText(this, "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // ✔ Configuration de Google Sign-In
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        // ✔ Connexion avec Google
+        mBinding.gSignInButton.setOnClickListener {
+            signInWithGoogle()
         }
     }
 
-    private fun validateEmail(): Boolean {
-        val email = mBinding.emailEt.text.toString()
-        return when {
-            email.isEmpty() -> {
-                showError(mBinding.emailLayout, "Email is required")
-                false
-            }
-            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                showError(mBinding.emailLayout, "Invalid email address")
-                false
-            }
-            else -> {
-                hideError(mBinding.emailLayout)
-                true
-            }
+    private fun signInWithGoogle() {
+        val signInIntent = googleSignInClient.signInIntent
+        launcher.launch(signInIntent)
+    }
+
+    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            handleResults(task)
+        } else {
+            Toast.makeText(this, "Connexion annulée", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun validatePassword(): Boolean {
-        val password = mBinding.passET.text.toString()
-        return when {
-            password.isEmpty() -> {
-                showError(mBinding.passwordLayout, "Password is required")
-                false
+    private fun handleResults(task: Task<GoogleSignInAccount>) {
+        if (task.isSuccessful) {
+            val account: GoogleSignInAccount? = task.result
+            account?.let {
+                updateUI(it)
             }
-            password.length < 8 -> {
-                showError(mBinding.passwordLayout, "Password must be at least 8 characters long")
-                false
-            }
-            else -> {
-                hideError(mBinding.passwordLayout)
-                true
-            }
+        } else {
+            Log.e("GoogleSignIn", "Erreur : ${task.exception}")
+            Toast.makeText(this, "Erreur de connexion Google", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun showError(layout: com.google.android.material.textfield.TextInputLayout, message: String) {
-        layout.apply {
-            isErrorEnabled = true
-            error = message
-            VibrateView.vibrate(this@SignInActivity, this)
-        }
-    }
-
-    private fun hideError(layout: com.google.android.material.textfield.TextInputLayout) {
-        layout.apply {
-            isErrorEnabled = false
-            error = null
-        }
-    }
-
-    override fun onFocusChange(view: View?, hasFocus: Boolean) {
-        if (view != null && !hasFocus) {
-            when (view.id) {
-                R.id.emailEt -> validateEmail()
-                R.id.passET -> validatePassword()
+    private fun updateUI(account: GoogleSignInAccount) {
+        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Toast.makeText(this, "Connexion réussie avec Google", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("email", account.email)
+                intent.putExtra("name", account.displayName)
+                startActivity(intent)
+                finish()
+            } else {
+                Log.e("GoogleAuth", "Erreur : ${task.exception}")
+                Toast.makeText(this, "Échec de l'authentification Google", Toast.LENGTH_SHORT).show()
             }
         }
     }
