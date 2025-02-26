@@ -27,4 +27,10 @@ class AuthViewModel : ViewModel() {
         authRepository.signOut()
         _isAuthenticated.value = false
     }
+
+    fun signInWithGoogle(idToken: String) {
+        authRepository.signInWithGoogle(idToken) { success ->
+            _isAuthenticated.value = success
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.game_box.repository
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 
 class AuthRepository {
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -21,5 +22,13 @@ class AuthRepository {
 
     fun signOut() {
         firebaseAuth.signOut()
+    }
+
+    fun signInWithGoogle(idToken: String, callback: (Boolean) -> Unit) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        firebaseAuth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                callback(task.isSuccessful)
+            }
     }
 }
