@@ -17,6 +17,7 @@ import com.example.game_box.data.model.Note
 import com.example.game_box.data.repository.NoteRepository
 import com.example.game_box.viewmodel.NoteViewModel
 import com.example.game_box.viewmodel.NoteViewModelFactory
+import androidx.lifecycle.ViewModelProvider
 
 class DevNotesActivity : AppCompatActivity() {
 
@@ -36,12 +37,13 @@ class DevNotesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dev_notes)
 
-        // Configuration de la Toolbar pour activer la flèche de retour
+        // Configuration de la Toolbar et activation de la flèche "up"
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Dev Notes"
 
-        // Récupération de l'ID utilisateur transmis via l'intent
+        // Récupération de l'ID utilisateur
         userId = intent.getStringExtra("USER_ID") ?: ""
         if (userId.isBlank()) {
             Toast.makeText(this, "Erreur : UID manquant", Toast.LENGTH_LONG).show()
@@ -65,66 +67,61 @@ class DevNotesActivity : AppCompatActivity() {
             currentUserId = userId,
             onNoteClick = { note -> showNoteDetail(note) },
             onFavoriteClick = { note, isFavorite -> toggleFavorite(note, isFavorite) },
-            onDeleteClick = { /* Dans cette vue globale, la suppression n'est pas proposée */ }
+            onDeleteClick = { } // Pas de suppression dans la vue globale
         )
         recyclerView.adapter = adapter
 
         // Initialisation du ViewModel
         val repository = NoteRepository()
         val factory = NoteViewModelFactory(repository)
-        noteViewModel = androidx.lifecycle.ViewModelProvider(this, factory).get(NoteViewModel::class.java)
+        noteViewModel = ViewModelProvider(this, factory).get(NoteViewModel::class.java)
 
-        // Observation des mises à jour des notes
         noteViewModel.notes.observe(this) { notes ->
             progressBar.visibility = View.GONE
             adapter.updateNotes(notes)
         }
 
-        // Bouton "Ajouter une note" : ouvre NoteFormActivity
+        // Bouton "Ajouter une note"
         btnAddNote.setOnClickListener {
             val intent = Intent(this, NoteFormActivity::class.java)
             intent.putExtra("USER_ID", userId)
             startActivity(intent)
         }
 
-        // Bouton "Mes Favoris" : ouvre FavoritesActivity
+        // Bouton "Mes Favoris"
         btnFavorites.setOnClickListener {
             val intent = Intent(this, FavoritesActivity::class.java)
             intent.putExtra("USER_ID", userId)
             startActivity(intent)
         }
 
-        // Bouton "Mes Notes" : ouvre MyNotesActivity
+        // Bouton "Mes Notes"
         btnMyNotes.setOnClickListener {
             val intent = Intent(this, MyNotesActivity::class.java)
             intent.putExtra("USER_ID", userId)
             startActivity(intent)
         }
 
-        // Bouton "Rechercher" : lance une recherche par tags
+        // Bouton "Rechercher"
         btnSearch.setOnClickListener {
             val tags = searchView.text.toString().trim()
             progressBar.visibility = View.VISIBLE
             if (tags.isNotEmpty()) {
-                // Pour une recherche globale, on passe une chaîne vide pour userId
+                // Recherche globale sans filtrer par utilisateur (on passe une chaîne vide)
                 noteViewModel.searchNotes("", tags)
             } else {
                 noteViewModel.fetchAllNotes()
             }
         }
 
-        // Chargement initial de toutes les notes globales
+        // Chargement initial
         progressBar.visibility = View.VISIBLE
         noteViewModel.fetchAllNotes()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Gestion du clic sur la flèche de retour de la Toolbar
         return when (item.itemId) {
-            android.R.id.home -> {
-                finish()
-                true
-            }
+            android.R.id.home -> { finish(); true }
             else -> super.onOptionsItemSelected(item)
         }
     }

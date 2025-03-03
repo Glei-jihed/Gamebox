@@ -47,20 +47,21 @@ class NoteAdapter(
             holder.btnDelete.visibility = View.GONE
         }
 
-        // Mettre à jour l'icône de favoris
+        // Met à jour l'icône de favoris selon l'état actuel
         holder.btnFavorite.setImageResource(
             if (note.isFavorite) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_border
         )
 
-        // Log pour débogage sur le clic favori
+        // Clic sur l'icône favoris
         holder.btnFavorite.setOnClickListener {
             val newFavState = !note.isFavorite
-            android.util.Log.d("NoteAdapter", "Clic sur favoris pour note ${note.id}, nouvel état: $newFavState")
             onFavoriteClick(note, newFavState)
         }
 
+        // Clic sur l'item pour afficher le détail
         holder.itemView.setOnClickListener { onNoteClick(note) }
 
+        // Bouton Join pour ouvrir l'URL source, le cas échéant
         holder.btnJoin.setOnClickListener {
             if (!note.sourceUrl.isNullOrBlank()) {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(note.sourceUrl))

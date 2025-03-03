@@ -1,9 +1,13 @@
 package com.example.game_box.ui
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.*
+import android.widget.EditText
+import android.widget.Spinner
+import android.widget.TextView
+import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import com.example.game_box.R
 import com.example.game_box.data.model.Note
@@ -41,6 +45,12 @@ class NoteFormActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_form)
 
+        // Configuration de la Toolbar avec flèche "up"
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Formulaire de note"
+
         etTitle = findViewById(R.id.etTitle)
         etDescription = findViewById(R.id.etDescription)
         etSourceUrl = findViewById(R.id.etSourceUrl)
@@ -55,7 +65,8 @@ class NoteFormActivity : AppCompatActivity() {
         userId = intent.getStringExtra("USER_ID") ?: ""
         noteId = intent.getLongExtra("NOTE_ID", 0)
 
-        val adapterSpinner = ArrayAdapter(
+        // Configuration du spinner
+        val adapterSpinner = android.widget.ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
             availableTags
@@ -78,8 +89,14 @@ class NoteFormActivity : AppCompatActivity() {
         }
 
         btnCreateNote.setOnClickListener { saveNote() }
-
         btnCancelNote.setOnClickListener { finish() }
+    }
+
+    override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
+        return when(item.itemId) {
+            android.R.id.home -> { finish(); true }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun saveNote() {

@@ -3,21 +3,36 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_open_api_doc"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
-        tools:context=".ui.OpenApiDocActivity">
+        android:background="@android:color/white"
+        tools:context=".ui.OpenApiDocActivity"
+        android:padding="16dp">
 
-    <TextView
-            android:id="@+id/tvOpenApi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Open API Doc"
-            android:textSize="24sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:title="Open API Doc"
+            app:titleTextColor="@android:color/white"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Contenu du document (exemple simple) -->
+    <TextView
+            android:id="@+id/tvOpenApi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Documentation de l'API"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="32dp"/>
+            android:layout_marginTop="16dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -50,9 +50,7 @@ class NoteViewModel(private val repository: NoteRepository) : ViewModel() {
     }
 
     fun deleteNote(noteId: Long, callback: (Boolean) -> Unit) {
-        repository.deleteNote(noteId) { success ->
-            callback(success)
-        }
+        repository.deleteNote(noteId, callback)
     }
 
     fun addFavorite(userId: String, noteId: Long, callback: (Boolean) -> Unit) {

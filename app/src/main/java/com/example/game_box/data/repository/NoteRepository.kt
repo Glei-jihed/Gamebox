@@ -104,10 +104,13 @@ class NoteRepository {
             override fun onResponse(call: Call<FavoriteNote>, response: Response<FavoriteNote>) {
                 if (response.isSuccessful) {
                     Log.d("NoteRepository", "addFavorite OK pour note $noteId")
+                    callback(true)
                 } else {
-                    Log.e("NoteRepository", "addFavorite failed: ${response.message()}")
+                    // Affiche le contenu de l'erreur pour débogage
+                    val errorMsg = response.errorBody()?.string() ?: response.message()
+                    Log.e("NoteRepository", "addFavorite failed: $errorMsg")
+                    callback(false)
                 }
-                callback(response.isSuccessful)
             }
             override fun onFailure(call: Call<FavoriteNote>, t: Throwable) {
                 Log.e("NoteRepository", "addFavorite onFailure: ${t.message}")

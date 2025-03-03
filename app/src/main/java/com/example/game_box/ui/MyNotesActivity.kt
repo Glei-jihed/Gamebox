@@ -2,9 +2,11 @@ package com.example.game_box.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +28,12 @@ class MyNotesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_notes)
+
+        // Configuration de la Toolbar avec flèche "up"
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Mes Notes"
 
         userId = intent.getStringExtra("USER_ID") ?: ""
         if (userId.isBlank()) {
@@ -58,6 +66,13 @@ class MyNotesActivity : AppCompatActivity() {
 
         progressBar.visibility = View.VISIBLE
         noteViewModel.fetchNotes(userId)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            android.R.id.home -> { finish(); true }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun showNoteDetail(note: Note) {

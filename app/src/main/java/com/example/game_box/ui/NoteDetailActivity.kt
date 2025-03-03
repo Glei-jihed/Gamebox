@@ -3,8 +3,12 @@ package com.example.game_box.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.*
+import android.view.MenuItem
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import com.example.game_box.R
 import com.example.game_box.data.repository.NoteRepository
@@ -15,13 +19,18 @@ class NoteDetailActivity : AppCompatActivity() {
 
     private lateinit var noteViewModel: NoteViewModel
     private lateinit var userId: String
-
     private var noteId: Long = 0
     private var noteUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_detail)
+
+        // Configuration de la Toolbar avec flèche "up"
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Détail de la note"
 
         val noteTitle = findViewById<TextView>(R.id.noteTitle)
         val noteDescription = findViewById<TextView>(R.id.noteDescription)
@@ -31,7 +40,6 @@ class NoteDetailActivity : AppCompatActivity() {
 
         userId = intent.getStringExtra("USER_ID") ?: ""
         noteId = intent.getLongExtra("NOTE_ID", 0)
-
         val title = intent.getStringExtra("NOTE_TITLE") ?: "Sans titre"
         val description = intent.getStringExtra("NOTE_DESCRIPTION") ?: "Aucune description"
         val tags = intent.getStringArrayListExtra("NOTE_TAGS") ?: arrayListOf()
@@ -62,6 +70,13 @@ class NoteDetailActivity : AppCompatActivity() {
                     Toast.makeText(this, "Erreur lors de l'ajout aux favoris", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            android.R.id.home -> { finish(); true }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }

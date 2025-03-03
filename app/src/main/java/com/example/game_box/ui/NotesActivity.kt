@@ -2,10 +2,13 @@ package com.example.game_box.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
+import android.widget.Button
+import android.widget.EditText
 import android.view.View
-import android.widget.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.game_box.R
@@ -14,6 +17,7 @@ import com.example.game_box.data.model.Note
 import com.example.game_box.data.repository.NoteRepository
 import com.example.game_box.viewmodel.NoteViewModel
 import com.example.game_box.viewmodel.NoteViewModelFactory
+import androidx.lifecycle.ViewModelProvider
 
 class NotesActivity : AppCompatActivity() {
 
@@ -31,6 +35,12 @@ class NotesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notes)
 
+        // Configuration de la Toolbar avec flèche "up"
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Notes"
+
         userId = intent.getStringExtra("USER_ID") ?: ""
         if (userId.isBlank()) {
             Toast.makeText(this, "Erreur : UID manquant", Toast.LENGTH_LONG).show()
@@ -38,11 +48,11 @@ class NotesActivity : AppCompatActivity() {
             return
         }
 
-        recyclerView = findViewById(R.id.recyclerView)
         searchView = findViewById(R.id.searchView)
         btnSearch = findViewById(R.id.btnSearch)
         btnAddNote = findViewById(R.id.btnAddNote)
         progressBar = findViewById(R.id.progressBar)
+        recyclerView = findViewById(R.id.recyclerView)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = NoteAdapter(
@@ -86,6 +96,13 @@ class NotesActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         noteViewModel.fetchNotes(userId)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            android.R.id.home -> { finish(); true }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun showNoteDetail(note: Note) {
