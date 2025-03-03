@@ -3,25 +3,12 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/activity_dev_notes"
+        android:id="@+id/activity_notes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
         android:padding="16dp"
-        tools:context=".ui.DevNotesActivity">
-
-    <!-- Barre de progression -->
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:id="@+id/progressBar"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:visibility="gone"
-            app:indicatorSize="48dp"
-            app:trackThickness="4dp"
-            app:indicatorColor="@color/teal_700"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+        tools:context=".ui.NotesActivity">
 
     <!-- Barre de recherche -->
     <EditText
@@ -32,14 +19,14 @@
             android:padding="12dp"
             android:background="@android:drawable/editbox_background"
             android:inputType="text"
-            app:layout_constraintTop_toBottomOf="@id/progressBar"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp"/>
 
-    <!-- Première rangée de boutons -->
+    <!-- Boutons Rechercher et Ajouter -->
     <LinearLayout
-            android:id="@+id/buttonContainer"
+            android:id="@+id/linearButtons"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -47,7 +34,7 @@
             app:layout_constraintTop_toBottomOf="@id/searchView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="12dp">
+            android:layout_marginTop="8dp">
 
         <Button
                 android:id="@+id/btnSearch"
@@ -56,9 +43,9 @@
                 android:layout_weight="1"
                 android:text="Rechercher"
                 android:textStyle="bold"
-                android:padding="10dp"
                 android:backgroundTint="@color/teal_700"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white"
+                android:padding="10dp"/>
 
         <Button
                 android:id="@+id/btnAddNote"
@@ -67,54 +54,29 @@
                 android:text="Ajouter une note"
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:padding="10dp"
-                android:backgroundTint="@color/yellow"
+                android:backgroundTint="@color/primary"
                 android:textColor="@android:color/white"
+                android:padding="10dp"
                 android:layout_marginStart="8dp"/>
     </LinearLayout>
 
-    <!-- Deuxième rangée de boutons -->
-    <LinearLayout
-            android:id="@+id/personalButtons"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/buttonContainer"
+    <!-- ProgressBar -->
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progressBar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/linearButtons"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="12dp">
-
-        <Button
-                android:id="@+id/btnFavorites"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Mes Favoris"
-                android:textStyle="bold"
-                android:backgroundTint="@color/red"
-                android:textColor="@android:color/white"
-                android:padding="10dp"/>
-
-        <Button
-                android:id="@+id/btnMyNotes"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Mes Notes"
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:backgroundTint="@color/violet"
-                android:textColor="@android:color/white"
-                android:padding="10dp"
-                android:layout_marginStart="8dp"/>
-    </LinearLayout>
+            android:layout_marginTop="16dp"/>
 
     <!-- RecyclerView globale -->
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/personalButtons"
+            app:layout_constraintTop_toBottomOf="@id/progressBar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

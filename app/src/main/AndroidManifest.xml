@@ -3,11 +3,14 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Permissions Internet / Vibrate si tu en as besoin -->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Permissions -->
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
+            android:networkSecurityConfig="@xml/network_security_config"
+            android:usesCleartextTraffic="true"
             android:allowBackup="true"
             android:dataExtractionRules="@xml/data_extraction_rules"
             android:fullBackupContent="@xml/backup_rules"
@@ -18,7 +21,7 @@
             android:theme="@style/Theme.Gamebox"
             tools:targetApi="31">
 
-        <!-- Lancer SignInActivity en premier -->
+        <!-- SignInActivity (point d'entrée) -->
         <activity
                 android:name=".ui.SignInActivity"
                 android:exported="true">
@@ -28,20 +31,20 @@
             </intent-filter>
         </activity>
 
-        <!-- SignUpActivity -->
-        <activity
-                android:name=".ui.SignUpActivity"
-                android:exported="true"/>
+        <activity android:name=".ui.SignUpActivity" android:exported="true"/>
+        <activity android:name=".ui.MainActivity" android:exported="true"/>
+        <activity android:name=".ui.NotesActivity" android:exported="true"/>
+        <activity android:name=".ui.DevNotesActivity" android:exported="true"/>
+        <activity android:name=".ui.FavoritesActivity" android:exported="true"/>
+        <activity android:name=".ui.MyNotesActivity" android:exported="true"/>
+        <activity android:name=".ui.NoteDetailActivity" android:exported="true"/>
+        <activity android:name=".ui.NoteFormActivity" android:exported="true"/>
+        <activity android:name=".ui.OpenApiDocActivity" android:exported="true"/>
 
-        <!-- MainActivity -->
-        <activity
-                android:name=".ui.MainActivity"
-                android:exported="true"/>
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
 
-        <!-- Firebase Auth Google Sign-In (optionnel) -->
         <meta-data
                 android:name="com.google.firebase.auth.API_KEY"
                 android:value="@string/default_web_client_id" />
-
     </application>
 </manifest>

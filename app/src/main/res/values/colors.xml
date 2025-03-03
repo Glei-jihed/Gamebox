@@ -9,6 +9,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="background">#FFFFFFFF</color>
+    <color name="primary">#6200EE</color> <!-- Remplace cette couleur par celle de ton design -->
+
 
 
     <color name="yellow">#FFC801</color>

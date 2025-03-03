@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:padding="16dp"
+        tools:context=".ui.NoteDetailActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <!-- Titre -->
+        <TextView
+                android:id="@+id/noteTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Titre de la note"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp"/>
+
+        <!-- Description -->
+        <TextView
+                android:id="@+id/noteDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Description complète de la note."
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toBottomOf="@id/noteTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp"/>
+
+        <!-- Tags -->
+        <TextView
+                android:id="@+id/noteTags"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Tags: tag1, tag2, tag3"
+                android:textSize="14sp"
+                android:textColor="@android:color/darker_gray"
+                app:layout_constraintTop_toBottomOf="@id/noteDescription"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="12dp"/>
+
+        <!-- Bouton Join -->
+        <Button
+                android:id="@+id/btnJoin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Voir le lien"
+                android:textStyle="bold"
+                android:backgroundTint="@color/teal_700"
+                android:textColor="@android:color/white"
+                app:layout_constraintTop_toBottomOf="@id/noteTags"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="20dp"/>
+
+        <!-- Bouton Ajouter aux favoris -->
+        <Button
+                android:id="@+id/btnAddFavorite"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Ajouter aux favoris"
+                android:textStyle="bold"
+                android:backgroundTint="@color/primary"
+                android:textColor="@android:color/white"
+                app:layout_constraintTop_toBottomOf="@id/btnJoin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="16dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

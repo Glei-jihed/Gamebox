@@ -11,7 +11,5 @@ class OpenApiDocActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityOpenApiDocBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
-
-        // TODO: Ajouter les fonctionnalités pour Open API Doc
     }
 }
