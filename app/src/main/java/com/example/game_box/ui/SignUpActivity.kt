@@ -6,8 +6,10 @@ import android.util.Patterns
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.game_box.R
 import com.example.game_box.databinding.ActivitySignUpBinding
+import com.example.game_box.utils.LocaleHelper
 import com.example.game_box.utils.VibrateView
 import com.example.game_box.viewmodel.AuthViewModel
 
@@ -20,10 +22,25 @@ class SignUpActivity : AppCompatActivity(), View.OnFocusChangeListener {
         mBinding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-        // Gestion du focus pour la validation en direct
+        // Gestion du focus pour validation en direct
         mBinding.emailEt.onFocusChangeListener = this
         mBinding.passET.onFocusChangeListener = this
         mBinding.confirmPassEt.onFocusChangeListener = this
+
+        // Boutons de basculement Langue & Thème
+        mBinding.btnToggleLanguage.setOnClickListener {
+            val currentLocale = resources.configuration.locale.language
+            val newLocale = if (currentLocale == "en") "fr" else "en"
+            LocaleHelper.setLocale(this, newLocale)
+        }
+        mBinding.btnToggleTheme.setOnClickListener {
+            val currentMode = AppCompatDelegate.getDefaultNightMode()
+            if (currentMode == AppCompatDelegate.MODE_NIGHT_YES) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+        }
 
         // Bouton "Sign Up"
         mBinding.button.setOnClickListener {
@@ -42,7 +59,7 @@ class SignUpActivity : AppCompatActivity(), View.OnFocusChangeListener {
         }
 
         // Redirection vers SignInActivity
-        mBinding.textView.setOnClickListener {
+        mBinding.tvSignInLink.setOnClickListener {
             startActivity(Intent(this, SignInActivity::class.java))
         }
 

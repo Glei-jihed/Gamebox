@@ -1,25 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_sign_up"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/signup_screen"
+        android:padding="16dp"
         tools:context=".ui.SignUpActivity">
 
+    <!-- Message d'accueil -->
+    <TextView
+            android:id="@+id/tvWelcomeSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome_sign_up"
+            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="32dp"/>
+
+    <!-- Champ Email -->
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailLayout"
             style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="300dp"
+            android:layout_marginTop="16dp"
             app:boxStrokeColor="@color/yellow"
             app:hintTextColor="@color/yellow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@id/tvWelcomeSignUp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailEt"
@@ -29,59 +43,57 @@
                 android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Champ Mot de passe -->
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordLayout"
             style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             app:counterEnabled="true"
             app:counterMaxLength="15"
             app:boxStrokeColor="@color/yellow"
             app:hintTextColor="@color/yellow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/emailLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passET"
-                android:maxLength="15"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/type_your_password"
                 android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Champ Retaper mot de passe -->
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/confirmPasswordLayout"
             style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             app:counterEnabled="true"
             app:counterMaxLength="15"
             app:boxStrokeColor="@color/yellow"
             app:hintTextColor="@color/yellow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/passwordLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirmPassEt"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/retype_your_password"
                 android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
+    <!-- Bouton S'inscrire -->
     <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button"
             android:layout_width="0dp"
@@ -91,24 +103,46 @@
             android:text="@string/sign_up"
             android:textColor="@color/black"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@id/confirmPasswordLayout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/confirmPasswordLayout" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" />
 
-
-
+    <!-- Lien vers Sign In -->
     <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tvSignInLink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:text="@string/already_registered_sign_in"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/button"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" />
 
+    <!-- Boutons de basculement Langue & Thème -->
+    <LinearLayout
+            android:id="@+id/llToggles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center"
+            android:layout_marginBottom="16dp">
+
+        <Button
+                android:id="@+id/btnToggleLanguage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/toggle_language" />
+
+        <Button
+                android:id="@+id/btnToggleTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/toggle_theme"
+                android:layout_marginStart="16dp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

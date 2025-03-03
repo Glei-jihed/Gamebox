@@ -1,16 +1,16 @@
 <resources>
-    <string name="app_name">Game-box</string>
+    <string name="app_name">DevBoosters</string>
     <string name="retype_your_password">Retype Your Password</string>
-    <string name="already_registered_sign_in">Already Registered , Sign In !</string>
+    <string name="already_registered_sign_in">Already Registered, Sign In!</string>
     <string name="sign_up">Sign Up</string>
     <string name="type_your_password">Type Your Password</string>
     <string name="type_your_email">Type your Email</string>
-    <string name="not_registered_yet_sign_up">Not Registered Yet , Sign Up !</string>
-    <string name="sign_in_with_google">Sign in with google</string>
-    <string name="sign_up_with_google_account">Sign up with google account</string>
-    <string name="sign_in_with_google_account">Sign in with google account</string>
+    <string name="not_registered_yet_sign_up">Not Registered Yet, Sign Up!</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="sign_up_with_google_account">Sign up with Google account</string>
+    <string name="sign_in_with_google_account">Sign in with Google account</string>
     <string name="sign_out">Sign out</string>
-    <string name="default_web_client_id" />
+    <string name="default_web_client_id"></string>
     <string name="play_offline">PLAY OFFLINE</string>
     <string name="join_game_online">Join Game Online</string>
     <string name="create_game_online">Create Game Online</string>
@@ -18,5 +18,11 @@
     <string name="enter_the_game_id">Enter the game ID</string>
     <string name="game_not_started">GAME NOT STARTED</string>
 
-
+    <!-- Nouvelles chaînes pour Sign Up / Sign In -->
+    <string name="welcome_sign_up">Welcome to Game-box! Create your account</string>
+    <string name="welcome_sign_in">Welcome back! Please sign in to continue</string>
+    <string name="sign_in">Sign In</string>
+    <!-- Boutons de basculement -->
+    <string name="toggle_language">Toggle Language</string>
+    <string name="toggle_theme">Toggle Theme</string>
 </resources>

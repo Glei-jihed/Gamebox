@@ -2,12 +2,13 @@ package com.example.game_box.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.game_box.R
@@ -33,8 +34,12 @@ class DevNotesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // On utilise le layout modifié activity_dev_notes.xml
         setContentView(R.layout.activity_dev_notes)
+
+        // Configuration de la Toolbar pour activer la flèche de retour
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Récupération de l'ID utilisateur transmis via l'intent
         userId = intent.getStringExtra("USER_ID") ?: ""
@@ -60,14 +65,14 @@ class DevNotesActivity : AppCompatActivity() {
             currentUserId = userId,
             onNoteClick = { note -> showNoteDetail(note) },
             onFavoriteClick = { note, isFavorite -> toggleFavorite(note, isFavorite) },
-            onDeleteClick = { } // Dans la vue globale, la suppression n'est pas proposée
+            onDeleteClick = { /* Dans cette vue globale, la suppression n'est pas proposée */ }
         )
         recyclerView.adapter = adapter
 
         // Initialisation du ViewModel
         val repository = NoteRepository()
         val factory = NoteViewModelFactory(repository)
-        noteViewModel = ViewModelProvider(this, factory).get(NoteViewModel::class.java)
+        noteViewModel = androidx.lifecycle.ViewModelProvider(this, factory).get(NoteViewModel::class.java)
 
         // Observation des mises à jour des notes
         noteViewModel.notes.observe(this) { notes ->
@@ -75,28 +80,28 @@ class DevNotesActivity : AppCompatActivity() {
             adapter.updateNotes(notes)
         }
 
-        // Bouton "Ajouter une note" : ouvre le formulaire de création
+        // Bouton "Ajouter une note" : ouvre NoteFormActivity
         btnAddNote.setOnClickListener {
             val intent = Intent(this, NoteFormActivity::class.java)
             intent.putExtra("USER_ID", userId)
             startActivity(intent)
         }
 
-        // Bouton "Mes Favoris" : ouvre l'activité des favoris
+        // Bouton "Mes Favoris" : ouvre FavoritesActivity
         btnFavorites.setOnClickListener {
             val intent = Intent(this, FavoritesActivity::class.java)
             intent.putExtra("USER_ID", userId)
             startActivity(intent)
         }
 
-        // Bouton "Mes Notes" : ouvre l'activité affichant uniquement vos notes
+        // Bouton "Mes Notes" : ouvre MyNotesActivity
         btnMyNotes.setOnClickListener {
             val intent = Intent(this, MyNotesActivity::class.java)
             intent.putExtra("USER_ID", userId)
             startActivity(intent)
         }
 
-        // Bouton "Rechercher" : lance une recherche par tag
+        // Bouton "Rechercher" : lance une recherche par tags
         btnSearch.setOnClickListener {
             val tags = searchView.text.toString().trim()
             progressBar.visibility = View.VISIBLE
@@ -108,9 +113,20 @@ class DevNotesActivity : AppCompatActivity() {
             }
         }
 
-        // Chargement initial de toutes les notes (globales)
+        // Chargement initial de toutes les notes globales
         progressBar.visibility = View.VISIBLE
         noteViewModel.fetchAllNotes()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Gestion du clic sur la flèche de retour de la Toolbar
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun showNoteDetail(note: Note) {
@@ -128,19 +144,19 @@ class DevNotesActivity : AppCompatActivity() {
     private fun toggleFavorite(note: Note, isFavorite: Boolean) {
         if (isFavorite) {
             noteViewModel.addFavorite(userId, note.id) { success ->
-                if (success) {
-                    Toast.makeText(this, "Note ajoutée aux favoris", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "Erreur lors de l'ajout aux favoris", Toast.LENGTH_SHORT).show()
-                }
+                Toast.makeText(
+                    this,
+                    if (success) "Note ajoutée aux favoris" else "Erreur lors de l'ajout aux favoris",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         } else {
             noteViewModel.removeFavorite(userId, note.id) { success ->
-                if (success) {
-                    Toast.makeText(this, "Note retirée des favoris", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "Erreur lors du retrait des favoris", Toast.LENGTH_SHORT).show()
-                }
+                Toast.makeText(
+                    this,
+                    if (success) "Note retirée des favoris" else "Erreur lors du retrait des favoris",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

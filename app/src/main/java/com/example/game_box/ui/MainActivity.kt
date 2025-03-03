@@ -46,10 +46,11 @@ class MainActivity : AppCompatActivity() {
             val userId: String = user.uid
             Log.d("MainActivity", "Utilisateur connecté: $userId")
             mBinding.cardDevNotes.setOnClickListener {
-                val intent = Intent(this, NotesActivity::class.java)
-                intent.putExtra("USER_ID", userId)
+                val intent = Intent(this, DevNotesActivity::class.java)
+                intent.putExtra("USER_ID", user.uid)
                 startActivity(intent)
             }
+
         } else {
             Log.e("MainActivity", "Utilisateur non connecté !")
         }

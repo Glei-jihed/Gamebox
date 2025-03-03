@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="purple_200">#E40909</color>
     <color name="red">#E40909</color>
@@ -9,12 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="background">#FFFFFFFF</color>
-    <color name="primary">#6200EE</color> <!-- Remplace cette couleur par celle de ton design -->
-
-
-
+    <color name="primary">#6200EE</color>
     <color name="yellow">#FFC801</color>
-
-
-
 </resources>

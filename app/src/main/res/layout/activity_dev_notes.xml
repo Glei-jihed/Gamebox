@@ -10,6 +10,18 @@
         android:padding="16dp"
         tools:context=".ui.DevNotesActivity">
 
+    <!-- Barre d'outils avec flèche de retour -->
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:title="Dev Notes"
+            app:titleTextColor="@android:color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
     <!-- Barre de progression -->
     <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progressBar"
@@ -19,9 +31,10 @@
             app:indicatorSize="48dp"
             app:trackThickness="4dp"
             app:indicatorColor="@color/teal_700"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"/>
 
     <!-- Barre de recherche -->
     <EditText
